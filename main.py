@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.errorhandler(404)
 def page_not_found(e):
 
-    subdomain_redirects = ('core', 'wordplay', 'mira3', 'soundx', 'harmio', 'volatile3gons', 'music', 'el')
+    subdomain_redirects = ('core', 'wordplay', 'mira3', 'soundx', 'harmio', 'quark', 'music', 'el')
     # If 'abc' is included, beetlebox.dev/abc/xyz is redirected to abc.beetlebox.dev/xyz
 
     skip_endpoints = tuple()  # Skip any endpoints requiring request.args, and any others to not suggest for redirect.
@@ -65,6 +65,11 @@ def page_not_found(e):
 @app.route('/favicon.ico')
 def favicon():
     return redirect(url_for('static', filename='favicon.ico'))
+
+
+@app.route('/volatile3gons')
+def triangles_old_url():
+    return redirect('https://quark.beetlebox.dev')
 
 
 # CV
