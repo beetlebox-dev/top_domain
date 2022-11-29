@@ -25,7 +25,6 @@
             display: block;
             box-sizing: border-box;
             width: 100%;
-            /* padding: max(1vw, 1vh); */
             padding: min(max(1vw, 1vh), 2.25vh);
         }
 
@@ -34,6 +33,7 @@
             vertical-align: top;
             width: min(max(16vw, 16vh), 36vh);
             margin: min(max(1.5vw, 1.5vh), 3.375vh) min(max(1vw, 1vh), 2.25vh);
+            line-height: min(max(2.16vw, 2.16vh), 4.86vh);  /* Proportional 1.2:1 with font-size for: .app-title, .app-subtitle */
         }
 
         .app-box img {
@@ -46,22 +46,14 @@
             object-fit: cover;
             width: 100%;
             aspect-ratio: 1/1;
+            transition-duration: 150ms;
         }
-
-        /* .app-box img:hover { */
-            /* border: max(0.4vw, 0.4vh) solid white; */
-            /* Match JavaScript */
-            /* Can't get rid of pixel glitch between border and image. */
-            /* background-color: white; */
-            /* background-clip: border-box; */
-            /* padding: none; */
-        /* } */
 
         .app-title, .app-subtitle {
             text-decoration: none;
         }
 
-        .app-title, .app-subtitle, #link {
+        .app-title, .app-subtitle {
             font-size: min(max(1.8vw, 1.8vh), 4.05vh);
         }
 
@@ -79,10 +71,14 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        #link {
-            display: block;
+        #link-container {
             margin: min(max(5vw, 5vh), 11.25vh) 0 min(max(3vw, 3vh), 6.75vh);
+        }
+
+        #link {
             color: hsl(128, 100%, 70%);
+            font-size: min(min(max(1.8vw, 1.8vh), 4.05vh), 1.2em);
+            transition-duration: 150ms;
         }
 
         #link:hover {
@@ -147,7 +143,7 @@
             ></div
         ></a>
         
-        <a id="link" href="{{ url_for('info') }}">About Beetlebox Apps</a>
+        <div id="link-container"><a id="link" href="{{ url_for('info') }}">About Beetlebox Apps</a></div>
 
     </div>
 
