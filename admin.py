@@ -1,7 +1,7 @@
 import os
 import smtplib
 import time
-from datetime import datetime
+from datetime import datetime, date
 from threading import Thread
 from pytz import timezone
 
@@ -47,3 +47,11 @@ def admin_alert_thread(subject, message, recipient='admin', datetime_header=True
     alert_args = [subject, message, recipient, datetime_header, timestamp_footer]
     alert_thread = Thread(target=admin_alert, args=alert_args)
     alert_thread.start()
+
+
+def year_range_since(first_year):
+    current_year = date.today().year
+    if current_year > first_year:
+        return f'{first_year}-{current_year}'
+    else:
+        return f'{first_year}'

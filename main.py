@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request, url_for, redirect
-from admin import admin_alert_thread
+from admin import admin_alert_thread, year_range_since
 
 
-# Copyright 2021 Johnathan Pennington | All rights reserved.
+copyright_years = year_range_since(2021)
+copyright_notice = f'Copyright {copyright_years} Johnathan Pennington | All rights reserved.'
 
 
 app = Flask(__name__)
@@ -59,7 +60,7 @@ def page_not_found(e):
                        f'Rendered page_not_found.html and suggested: \n{site_root}{a_href}'
         admin_alert_thread('Web App - 404', message_body)
 
-    return render_template('page_not_found.html', relpath=a_href, a_text=a_text), 404
+    return render_template('page_not_found.html', relpath=a_href, a_text=a_text, copyright_notice=copyright_notice), 404
 
 
 @app.route('/favicon.ico')
@@ -72,7 +73,7 @@ def triangles_old_url():
     return redirect('https://quark.beetlebox.dev')
 
 
-# CV
+# QR Code on CV
 @app.route('/qr/p')
 def qr_cv():
     return redirect(url_for('info'))
@@ -81,12 +82,12 @@ def qr_cv():
 # App Buttons
 @app.route('/')
 def home():
-    return render_template('apps.html')
+    return render_template('apps.html', copyright_notice=copyright_notice)
 
 
 @app.route('/info')
 def info():
-    return render_template('info.html')
+    return render_template('info.html', copyright_notice=copyright_notice)
 
 
 if __name__ == '__main__':
