@@ -3,7 +3,7 @@ from admin import admin_alert_thread, year_range_since
 
 
 copyright_years = year_range_since(2021)
-copyright_notice = f'Copyright {copyright_years} Johnathan Pennington | All rights reserved.'
+copyright_notice = f'{copyright_years} Johnathan Pennington | All rights reserved.'
 
 
 app = Flask(__name__)
@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 @app.errorhandler(404)
 def page_not_found(e):
-
     subdomain_redirects = ('core', 'wordplay', 'mira3', 'soundx', 'harmio', 'quark', 'music', 'el')
     # If 'abc' is included, beetlebox.dev/abc/xyz is redirected to abc.beetlebox.dev/xyz
 
