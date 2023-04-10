@@ -18,35 +18,44 @@
             color: hsl(0, 0%, 90%);
             font-family: Menlo, Monaco, 'Courier New', monospace;
             text-align: center;
+            padding: 2rem;
+
+            /* Body takes up full vertical space. */
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: safe center;
+            box-sizing: border-box;
         }
 
-        #main-container {
-            position: absolute;
-            display: block;
+        #apps-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             box-sizing: border-box;
-            width: 100%;
-            padding: min(max(1vw, 1vh), 2.25vh);
         }
 
         .app-box {
             display: inline-block;
             vertical-align: top;
-            width: min(max(16vw, 16vh), 36vh);
-            margin: min(max(1.5vw, 1.5vh), 3.375vh) min(max(1vw, 1vh), 2.25vh);
-            line-height: min(max(2.16vw, 2.16vh), 4.86vh);  /* Proportional 1.2:1 with font-size for: .app-title, .app-subtitle */
+            width: 10rem;
+            margin: 0.5rem;  /* Match #link-container bottom-margin with .app-box margin. */
+            line-height: 1.2rem;  /* Proportional 1.2:1 with font-size for: .app-title, .app-subtitle */
         }
 
         .app-box img {
             display: block;
-            margin: 0 0 min(max(0.7vw, 0.7vh), 1.575vh);
+            margin: 0 0 0.4rem;
             box-sizing: border-box;
-            border: min(max(0.4vw, 0.4vh), 0.9vh) solid hsla(0, 0%, 0%, 0);
-            /* Match JavaScript */
-            border-radius: min(max(5vw, 5vh), 11.25vh);
+            border: 0.2rem solid hsla(0, 0%, 0%, 0);
+            border-radius: 30%;
             object-fit: cover;
             width: 100%;
             aspect-ratio: 1/1;
             transition-duration: 150ms;
+        }
+        a:hover .app-box img {
+            border: 0.2rem solid white;
         }
 
         .app-title, .app-subtitle {
@@ -54,7 +63,7 @@
         }
 
         .app-title, .app-subtitle {
-            font-size: min(max(1.8vw, 1.8vh), 4.05vh);
+            font-size: 1rem;
         }
 
         .app-title {
@@ -72,12 +81,12 @@
         }
 
         #link-container {
-            margin: min(max(5vw, 5vh), 11.25vh) 0 min(max(3vw, 3vh), 6.75vh);
+            margin: 3rem 0 0.5rem;  /* Match #link-container bottom-margin with .app-box margin. */
         }
 
         #link {
             color: hsl(128, 100%, 70%);
-            font-size: min(min(max(1.8vw, 1.8vh), 4.05vh), 1.2em);
+            font-size: 1rem;
             transition-duration: 150ms;
         }
 
@@ -90,7 +99,7 @@
 
 <body>
 
-    <div id="main-container">
+    <div id="apps-container">
 
         <a href="https://maskedcat.co" target="_blank"
             ><div id="maskedcatco" class="app-box"
@@ -156,45 +165,11 @@
                 ><span class="app-subtitle">piano+computer</span
             ></div
         ></a>
-        
-        <div id="link-container"><a id="link" href="{{ url_for('info') }}">About Beetlebox Apps</a></div>
 
     </div>
 
+    <div id="link-container"><a id="link" href="{{ url_for('info') }}">About Beetlebox Apps</a></div>
+
 </body>
-
-<script>
-
-
-const mainContainer = document.getElementById('main-container');
-const mainContainerStyle = window.getComputedStyle(mainContainer);
-
-window.addEventListener('resize', resizeWindow);
-
-for (const appBox of document.querySelectorAll('.app-box')) {
-    const appIcon = document.querySelector(`#${appBox.id} img`);
-    appBox.addEventListener('mouseenter', () => {
-        appIcon.style.border = 'min(max(0.4vw, 0.4vh), 0.9vh) solid white';
-    });
-    appBox.addEventListener('mouseleave', () => {
-        appIcon.style.border = 'min(max(0.4vw, 0.4vh), 0.9vh) solid hsla(0, 0%, 0%, 0)';
-    });
-};
-
-resizeWindow();
-
-function resizeWindow() {
-    const mainContainerHeight = pxStringToNum(mainContainerStyle.getPropertyValue('height'));
-    const mainContainerTop = Math.max((window.innerHeight - mainContainerHeight) / 2, 0);
-    mainContainer.style.top = `${mainContainerTop}px`;
-};
-
-function pxStringToNum(pxString) {
-    // Pass in a string such as '123.45px'. Returns a number such as 123.45.
-    return Number(pxString.split('px')[0]);
-};
-
-
-</script>
 
 </html>
