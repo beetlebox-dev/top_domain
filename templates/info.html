@@ -109,7 +109,7 @@
         <div class='code-block'>
             <p><span class='yellow'>MAIN_LANGUAGE</span><span class='soft-grey'> = </span><em>Python</em></p>
             <p>
-                <span class='yellow'>DESCRIPTION</span><span class='soft-grey'> = </span>This web app finds paths that connect random words entered by the user. I sourced words, definitions, and pointers from <em>WordNet</em>, an English database from Princeton. My code searches through the database, using synonym-like relationships to go from word to word until reaching the desired target. URL routing is handled with <em>Flask</em>. For the web design, I used the <em>Jinja</em> template engine to inject custom <em>CSS</em> and style paths based on their length.
+                <span class='yellow'>DESCRIPTION</span><span class='soft-grey'> = </span>WORD<span class='soft-grey'>=></span>PLAY finds paths that connect random words entered by the user. I sourced words, definitions, and pointers from <em>WordNet</em>, an English database from Princeton. My code searches through the database, using synonym-like relationships to go from word to word until reaching the desired target. URL routing is handled with <em>Flask</em>. For the web design, I used the <em>Jinja</em> template engine to inject custom <em>CSS</em> and style paths based on their length.
             </p>
             <a href="https://github.com/beetlebox-dev/wordplay" target="_blank">View source code on GitHub</a>
             <br>
@@ -145,7 +145,7 @@
             <p><span class='yellow'>MAIN_LANGUAGE</span><span class='soft-grey'> = </span><em>JavaScript</em></p>
             <p>
                 <span class='yellow'>DESCRIPTION</span><span class='soft-grey'> = </span>
-                This web app will accept images submitted by the user and move the shapes within the image, creating distorted still frames and moving animations similar to cellular automata. The algorithm creates a duotone image based on pixel lightness, choosing a lightness threshold that minimizes the statistical variance of the pixel lightness values on each side of the threshold. The duotone image is used to identify shapes and edges to move.
+                MIRA3 will accept images submitted by the user and move the shapes within the image, creating distorted still frames and moving animations similar to cellular automata. The algorithm creates a duotone image based on pixel lightness, choosing a lightness threshold that minimizes the statistical variance of the pixel lightness values on each side of the threshold. The duotone image is used to identify shapes and edges to move.
                 <br><br>
                 All image processing happens client-side, with the server simply fulfilling the initial page request. <em>Web Workers</em> are used for processing the image so that each frame calculated becomes immediately available. The web design is responsive to any screen size, and is optimized for both desktop and mobile.
             </p>
@@ -184,12 +184,12 @@
         </a></h3>
         <div class='code-block'>
             <p><span class='yellow'>MAIN_LANGUAGE</span><span class='soft-grey'> = </span><em>Python</em></p>
-<!--            <p>-->
-<!--                <span class='yellow'>DESCRIPTION</span><span class='soft-grey'> = </span>-->
-<!--                Lorem ipsum...-->
-<!--                <br><br>-->
-<!--                <em>URLSearchParams</em>-->
-<!--            </p>-->
+            <p>
+                <span class='yellow'>DESCRIPTION</span><span class='soft-grey'> = </span>
+                BABYtime allows users to create a specialized pregnancy calendar. The calendar automatically generates countdowns to trimesters and due dates, allows users to create custom events, shows both calendar and gestational dating, and estimates the baby's current weight in real-time.
+                <br><br>
+                All user data for each calendar is stored directly in <em>URLSearchParams</em> and is instantly shareable, which eliminates the need for logging in or storing any user data <span class='soft-grey'>(server-side database, HTTP cookies, etc.)</span>.
+            </p>
             <a href="https://github.com/beetlebox-dev/baby" target="_blank">View source code on GitHub</a>
             <br>
             <br>
