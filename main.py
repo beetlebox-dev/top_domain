@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect
-from admin import admin_alert_thread, year_range_since
+from admin import admin_alert_thread, copyright_notice
 
 
-copyright_years = year_range_since(2021)
-copyright_notice = f'{copyright_years} Johnathan Pennington | All rights reserved.'
+copyright_notice = copyright_notice(2021)
 
 
 app = Flask(__name__)
@@ -39,6 +38,7 @@ def page_not_found(e):
     # and an admin alert is sent.
     for path_to_ignore in ignore_paths_starting_with:
         if request.path.startswith(f'/{path_to_ignore}'):
+            print('Not a request of concern.')
             request_of_concern = False
             break
 
