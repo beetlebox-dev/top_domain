@@ -15,6 +15,8 @@ ALERT_RECIPIENT = os.getenv('ALERT_RECIPIENT')
 
 def admin_alert(subject, message, recipient='admin', datetime_header=True, timestamp_footer=True):
 
+    timestamp_now = time.time()
+
     if recipient == 'admin':
         recipient = ALERT_RECIPIENT
 
@@ -22,7 +24,7 @@ def admin_alert(subject, message, recipient='admin', datetime_header=True, times
 
     if datetime_header:
         pacific_tz = timezone("US/Pacific")
-        time_to_format = datetime.fromtimestamp(time.time(), tz=pacific_tz)
+        time_to_format = datetime.fromtimestamp(timestamp_now, tz=pacific_tz)
         second = round(float(time_to_format.strftime("%S.%f")), 2)
         formatted_datetime = time_to_format.strftime(f"%Y-%m-%d %H:%M:{second}")
         full_message += f'{formatted_datetime}\n'
@@ -30,7 +32,7 @@ def admin_alert(subject, message, recipient='admin', datetime_header=True, times
     full_message += message
 
     if timestamp_footer:
-        full_message += f'\n{time.time()}'
+        full_message += f'\n{timestamp_now}'
 
     # print(f"*****************\nSubject: {subject}\n{message}\n*****************")
 

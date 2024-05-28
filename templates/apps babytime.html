@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- (c) {{ copyright_notice }} -->
+
+<head>
+    <meta charset="utf-8">
+    <title>Beetlebox Apps</title>
+    <meta name="description" content="Games, animations, music, etc.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include "icons.html" %}
+    <style>
+
+        body {
+            margin: 0;
+            background-color: hsl(0, 0%, 8%);
+            color: hsl(0, 0%, 90%);
+            font-family: Menlo, Monaco, 'Courier New', monospace;
+            text-align: center;
+            padding: 2rem;
+
+            /* Body takes up full vertical space. */
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: safe center;
+            box-sizing: border-box;
+        }
+
+        #apps-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .app-box {
+            display: inline-block;
+            vertical-align: top;
+            width: 8rem;
+            margin: 0.8rem;  /* Match #link-container bottom-margin with .app-box margin. */
+            line-height: 1.2rem;  /* Proportional 1.2:1 with font-size for: .app-title, .app-subtitle */
+        }
+
+        .app-box img {
+            display: block;
+            margin: 0 0 0.4rem;
+            box-sizing: border-box;
+            border: 0.2rem solid hsla(0, 0%, 0%, 0);
+            border-radius: 30%;
+            object-fit: cover;
+            width: 100%;
+            aspect-ratio: 1/1;
+            transition-duration: 150ms;
+        }
+        a:hover .app-box img {
+            border: 0.2rem solid white;
+        }
+
+        .app-title, .app-subtitle {
+            text-decoration: none;
+        }
+
+        .app-title, .app-subtitle {
+            font-size: 1rem;
+        }
+
+        .app-title {
+            color: white;
+            font-weight: bold;
+        }
+
+        .wordplay-arrow {
+            color: hsl(0, 0%, 50%);
+        }
+
+        .app-subtitle {
+            color: hsl(203, 50%, 60%);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #link-container {
+            margin: 3rem 0 0.5rem;  /* Match #link-container bottom-margin with .app-box margin. */
+        }
+
+        #link {
+            color: hsl(128, 100%, 70%);
+            font-size: 1rem;
+            transition-duration: 150ms;
+        }
+
+        #link:hover {
+            color: hsl(306, 100%, 50%);
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="apps-container">
+
+        <a href="https://maskedcat.co" target="_blank"
+            ><div id="maskedcatco" class="app-box"
+                ><img title="Masked Cat Co: e-commerce website" alt="" src="{{ url_for('static', filename='icons/maskedcatco.jpeg') }}"
+                ><span class="app-title">Masked<wbr>CatCo</span
+                ><br
+                ><span class="app-subtitle">e-commerce</span
+            ></div
+        ><a href="https://core.beetlebox.dev" target="_blank"
+            ><div id="core" class="app-box"
+                ><img title="Core: online game" alt="" src="{{ url_for('static', filename='icons/core.jpeg') }}"
+                ><span class="app-title">Core</span
+                ><br
+                ><span class="app-subtitle">game</span
+            ></div
+        ></a><a href="https://wordplay.beetlebox.dev" target="_blank"
+            ><div id="wordplay" class="app-box"
+                ><img title="WORD=>PLAY: fun with synonyms" alt="" src="{{ url_for('static', filename='icons/wordplay.jpeg') }}"
+                ><span class="app-title">WORD<span class="wordplay-arrow">=></span><wbr>PLAY</span
+                ><br
+                ><span class="app-subtitle">fun with synonyms</span
+            ></div
+        ></a><a href="https://wordpath.beetlebox.dev" target="_blank"
+            ><div id="wordpath" class="app-box"
+                ><img title="wordPATH: language puzzle" alt="" src="{{ url_for('static', filename='icons/wordpath.png') }}"
+                ><span class="app-title">word<wbr>PATH</span
+                ><br
+                ><span class="app-subtitle">language puzzle</span
+            ></div
+        ></a><a href="https://mira3.beetlebox.dev" target="_blank"
+            ><div id="mira3" class="app-box"
+                ><img title="MIRA3: image animator" alt="" src="{{ url_for('static', filename='icons/mira3.jpeg') }}"
+                ><span class="app-title">MIRA3</span
+                ><br
+                ><span class="app-subtitle">image animator</span
+            ></div
+        ></a><a href="https://soundx.beetlebox.dev" target="_blank"
+            ><div id="soundx" class="app-box"
+                ><img title="SoundX: ferry route optimizer" alt="" src="{{ url_for('static', filename='icons/soundx.jpeg') }}"
+                ><span class="app-title">SoundX</span
+                ><br
+                ><span class="app-subtitle">ferry trip planner</span
+            ></div
+        ></a><a href="https://babytime.beetlebox.dev" target="_blank"
+            ><div id="babytime" class="app-box"
+                ><img title="BABYtime: pregnancy calendar" alt="" src="{{ url_for('static', filename='icons/babytime.jpeg') }}"
+                ><span class="app-title">BABYtime</span
+                ><br
+                ><span class="app-subtitle">pregnancy calendar</span
+            ></div
+        ></a><a href="https://harmio.beetlebox.dev" target="_blank"
+            ><div id="harmio" class="app-box"
+                ><img title="HARMio: real-time melody harmonizer" alt="" src="{{ url_for('static', filename='icons/harmio.jpeg') }}"
+                ><span class="app-title">HARMio</span
+                ><br
+                ><span class="app-subtitle">melody harmonizer</span
+            ></div
+        ></a><a href="https://quark.beetlebox.dev" target="_blank"
+            ><div id="volatile3gons" class="app-box"
+                ><img title="Quark: animation" alt="" src="{{ url_for('static', filename='icons/volatile3gons.jpeg') }}"
+                ><span class="app-title">Quark</span
+                ><br
+                ><span class="app-subtitle">animation</span
+            ></div
+        ></a><a href="https://music.beetlebox.dev" target="_blank"
+            ><div id="music" class="app-box"
+                ><img title="BeetleboxMusic: piano+computer" alt="" src="{{ url_for('static', filename='icons/music.jpeg') }}"
+                ><span class="app-title">Beetle<wbr>box<wbr>Music</span
+                ><br
+                ><span class="app-subtitle">piano+<wbr>computer</span
+            ></div
+        ></a>
+
+    </div>
+
+    <div id="link-container"><a id="link" href="{{ url_for('info') }}">About Beetlebox Apps</a></div>
+
+</body>
+
+</html>
