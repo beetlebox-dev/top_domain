@@ -5,7 +5,7 @@ from datetime import datetime, date
 from threading import Thread
 
 from pytz import timezone
-from gmail_api import send_gmail
+from gmail_api_old import send_gmail
 
 
 IP_API_ENDPOINT = 'https://api.ipgeolocation.io/ipgeo'
