@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, redirect
-from beetlebox.admin import admin_alert_thread, copyright_notice
+from beetlebox.admin import admin_alert_thread, copyright_notice  # pip install beetlebox
 
 
 debug_mode = False
