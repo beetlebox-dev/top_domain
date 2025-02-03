@@ -3,9 +3,9 @@ from beetlebox.admin import admin_alert_thread, copyright_notice  # pip install 
 
 
 debug_mode = False
-app_name = 'Topdomain'
-startup_message = f'{app_name}\nStarting up. \nDebug mode: {debug_mode} '
-admin_alert_thread('Web App - Log', startup_message)
+# app_name = 'Topdomain'
+# startup_message = f'{app_name}\nStarting up. \nDebug mode: {debug_mode} '
+# admin_alert_thread('Web App - Log', startup_message)
 
 
 copyright_notice = copyright_notice(2021)
