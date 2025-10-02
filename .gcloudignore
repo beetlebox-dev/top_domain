@@ -5,6 +5,7 @@
 .idea/
 __pycache__/
 venv/
+PyInterpreter/
 google/
 site-data/
 gmail_api_store/
