@@ -3,23 +3,27 @@
 // Copyright Johnathan Pennington | All rights reserved.
 
 
-// Add to template page:
+// Add to desired template page:
 // <script src="/static/stapley/stapley.js"></script>
+
+// To start a screensaver, call scsvrBounceStart() or scsvrAcrossStart(), i.e.:
+//     <div onclick="scsvrBounceStart()" style="cursor: pointer; ">Start Screensaver</div>
 
 
 const settings = {
+    'debug mode': true,  // When true, Stapley doesn't turn off when window loses focus.
     'wait before peek secs': 0,  // min: 0; production: 12
     'peek secs': 4,  // 16
     'bounce screensaver': {
         'show paper layer': false,
         'skew paper layer': false,
-        'filter background': true,
+        'filter background': false,
         'change filter on bounce': true,
     },
     'fly screensaver': {
         'show paper layer': true,
         'skew paper layer': true,
-        'filter background': true,
+        'filter background': false,
     },
 };
 // const waitBeforeNextPeekSecs = 0;  // min: 0; production: 12
@@ -45,7 +49,7 @@ headElem.appendChild(linkElem);
 
 
 // Add HTML.
-const stapleyBodyHtml = `
+const stapleyHtmlAll = `
     <div id="stapley-background" style="display: none; " onclick="stapleyMinimize();" ></div>
     <div id="stapley-box" style="opacity: 0; " >
         <img class="stapley-body" alt="" src="/static/stapley/scsvr/body.png" onclick="stapleyOnClick();" />
@@ -69,9 +73,10 @@ const stapleyBodyHtml = `
             </div>
         </div>
     </div>
-`;
-const stapleyRootHtml = `
-    <div id="scsvr-containerXXXXXX">
+
+    <!-- //////.////// DEBUG ONLY WRAPPER -->
+    <!-- SCREENSAVER HTML -->
+    <div id="scsvr-container">
         <div id="scsvr-stapley-box" style="z-index: 103; opacity: 0; display: none; " onclick="scsvrStop()">
             <img class="stapley-body" alt="" src="/static/stapley/scsvr/body.png" />
             <img class="stapley-eyes" alt="" src="/static/stapley/scsvr/eyes.png" />
@@ -79,11 +84,7 @@ const stapleyRootHtml = `
         <div id="scsvr-background" style="z-index: 102; opacity: 0; display: none; " onclick="scsvrStop()"></div>
     </div>
 `;
-const stapleyHtmlElem = document.createElement('div');
-stapleyHtmlElem.id = 'scsvr-container';
-stapleyHtmlElem.innerHTML = stapleyRootHtml;
-document.documentElement.append(stapleyHtmlElem);
-document.body.innerHTML += stapleyBodyHtml;
+document.body.innerHTML += stapleyHtmlAll;
 
 
 // JAVASCRIPT
@@ -199,7 +200,7 @@ for (const elem of stapleyEyesElems) {
 
 stapleyOpenEyes();
 
-const bodyRect = document.documentElement.getBoundingClientRect();
+const bodyRect = document.body.getBoundingClientRect();
 const bodyStyle = window.getComputedStyle(document.body, null);
 
 const stapleyJokeElems = document.querySelectorAll('#stapley-jokes-list li');
@@ -238,7 +239,7 @@ const scsvrBgOversizeRatio = 5;  // Background will be sized as this multiple of
 const scsvrBgTranslatePercent = 50 * (1 / scsvrBgOversizeRatio - 1);
 const scsvrBgTranslateStr = `translate(${scsvrBgTranslatePercent}%, ${scsvrBgTranslatePercent}%)`;
 const scsvrBgElem = document.querySelector('#scsvr-background');
-// const scsvrBgColorElem = document.querySelector('#scsvr-background-colorXXXXXX');//////.//////
+// const scsvrBgColorElem = document.querySelector('#scsvr-background-color');//////.//////
 // const scsvrBgColorElem = document.body;
 
 scsvrBgElem.style.top = 0;
@@ -251,20 +252,22 @@ scsvrBgElem.style.transform = `${scsvrBgTranslateStr}`;
 scsvrStapleyBoxElem.style.display = 'flex';
 
 scsvrStop();
-window.addEventListener('resize', windowResizeEventListener);
-//////.////// COMMENTED OUT FOR DEBUG ONLY!
-// window.addEventListener('blur', () => {
-//     stapleyClose(0);
-//     scsvrStop(false);
-// });
-window.addEventListener('focus', stapleyReset);
 
-//////.////// DEBUG ONLY!!!!!
+window.addEventListener('resize', windowResizeEventListener);
+if (!settings['debug mode']) {
+    window.addEventListener('blur', () => {
+        stapleyClose(0);
+        scsvrStop(false);
+    });
+    window.addEventListener('focus', stapleyReset);
+};
+
 window.addEventListener('keydown', (e) => {
     if (e.key === '0') scsvrStop();
     else if (e.key === '1') scsvrBounceStart();
     else if (e.key === '2') scsvrAcrossStart();
 });
+
 
 let windowResizeThrottleReopenTimeoutId, windowResizeScsvrStopTimeoutIdXXXXXX;
 let windowResizeThrottleOpen = true;
@@ -765,7 +768,7 @@ function scsvrBgRandChange(randFilterBool=false, randSkewBool=true, transitionFi
         // scsvrBgCurrentHueTurnValue += randFloat(-0.15, 0.15);
         // const saturatePercent = randInt(0, 200);
         // const filter = `saturate(${saturatePercent}%) hue-rotate(${scsvrBgCurrentHueTurnValue.toFixed(2)}turn)`;
-        document.documentElement.style.transition = transition;//////.////// doesn't change?????
+        document.body.style.transition = transition;//////.////// doesn't change?????
         // scsvrBgColorElem.style.filter = filter;
         // scsvrBgElem.style.filter = filter;
         scsvrRandBgFilter();
@@ -779,10 +782,8 @@ function scsvrRandBgFilter(transitionFilterBoolXXXXXX=true) {
     const saturatePercent = randInt(0, 200);
     const filter = `saturate(${saturatePercent}%) hue-rotate(${scsvrBgCurrentHueTurnValue.toFixed(2)}turn)`;
     // scsvrBgColorElem.style.transition = transition;//////.////// doesn't change?????
-    // document.body.style.filter = filter;
-    // document.body.style.backdropFilter = filter;
-    document.documentElement.style.filter = filter;
-    document.documentElement.style.backdropFilter = filter;
+    document.body.style.filter = filter;
+    document.body.style.backdropFilter = filter;
     scsvrBgElem.style.filter = filter;
 };
 
@@ -798,10 +799,10 @@ function scsvrStop(resetStapleyForPeeking=true, hideScsvrBg=false) {
 
     scsvrBgElem.style.transform = scsvrBgTranslateStr;
 
-    document.documentElement.style.backdropFilter = 'none';
-    document.documentElement.style.filter = 'none';
+    document.body.style.backdropFilter = 'none';
+    document.body.style.filter = 'none';
     scsvrBgElem.style.filter = 'none';
-    document.documentElement.style.transition = 'none';
+    document.body.style.transition = 'none';
     scsvrBgElem.style.transition = 'none';
 
     scsvrBgElem.style.opacity = 0;
@@ -922,7 +923,11 @@ function calcNextBouncePosition() {
 
     let boundX, boundY, newAfterBounceDirX, newAfterBounceDirY;
     scsvrStapleyBoxElemRect = scsvrStapleyBoxElem.getBoundingClientRect();
-
+    scsvrStapleyBoxElemRect.x += window.scrollX;
+    scsvrStapleyBoxElemRect.y += window.scrollY;
+    console.log('window.scrollY =', window.scrollY)
+    //////.//////// console.log('*********** scsvrStapleyBoxElemRect:')
+    //////.//////// console.log(JSON.stringify(scsvrStapleyBoxElemRect))
     const XXXXXXgutterPxX = scsvrStapleyBoxElemRect.width * scsvrBounceGutterPercent / 100;
     const XXXXXXgutterPxY = scsvrStapleyBoxElemRect.height * scsvrBounceGutterPercent / 100;
     if (scsvrStapleyBouncePosition.afterBounceDirX > 0) boundX = window.innerWidth - scsvrStapleyBoxElemRect.width + XXXXXXgutterPxX;
@@ -947,6 +952,11 @@ function calcNextBouncePosition() {
         const distToBounceTargetPx = root2 * maxDeltaY;//////*////// Combine?
         const distToTransitionEndPx = root2 * (maxDeltaY + extraTransitionDist);//////*////// Combine?
         scsvrStapleyBouncePosition.endTransitionY = bounceY + extraTransitionDist * scsvrStapleyBouncePosition.afterBounceDirY;
+        //////.//////console.log(`bounceY =`, bounceY);
+        //////.//////// console.log(`bounceY = scsvrStapleyBoxElemRect.y + maxDeltaX * scsvrStapleyBouncePosition.afterBounceDirY`);
+        //////.//////// console.log(bounceY, scsvrStapleyBoxElemRect.y, maxDeltaX, scsvrStapleyBouncePosition.afterBounceDirY);
+        //////.//////console.log('scsvrStapleyBouncePosition.endTransitionY = bounceY + extraTransitionDist * scsvrStapleyBouncePosition.afterBounceDirY');
+        //////.//////console.log(scsvrStapleyBouncePosition.endTransitionY, bounceY, extraTransitionDist, scsvrStapleyBouncePosition.afterBounceDirY);
         scsvrStapleyBouncePosition.endTransitionX = bounceX + extraTransitionDist * scsvrStapleyBouncePosition.afterBounceDirX;
         scsvrStapleyBouncePosition.transitionSecs = distToTransitionEndPx * speed;
         scsvrStapleyBouncePosition.secsBeforeBounce = distToBounceTargetPx * speed;
@@ -974,6 +984,10 @@ function calcNextBouncePosition() {
         const distToBounceTargetPx = root2 * maxDeltaX;//////*////// Combine?
         const distToTransitionEndPx = root2 * (maxDeltaX + extraTransitionDist);//////*////// Combine?
         scsvrStapleyBouncePosition.endTransitionY = bounceY + extraTransitionDist * scsvrStapleyBouncePosition.afterBounceDirY;
+        //////.//////console.log(`bounceY = scsvrStapleyBoxElemRect.y + maxDeltaX * scsvrStapleyBouncePosition.afterBounceDirY`);
+        //////.//////console.log(bounceY, scsvrStapleyBoxElemRect.y, maxDeltaX, scsvrStapleyBouncePosition.afterBounceDirY);
+        //////.//////console.log('scsvrStapleyBouncePosition.endTransitionY = bounceY + extraTransitionDist * scsvrStapleyBouncePosition.afterBounceDirY');
+        //////.//////console.log(scsvrStapleyBouncePosition.endTransitionY, bounceY, extraTransitionDist, scsvrStapleyBouncePosition.afterBounceDirY);
         scsvrStapleyBouncePosition.endTransitionX = bounceX + extraTransitionDist * scsvrStapleyBouncePosition.afterBounceDirX;
         scsvrStapleyBouncePosition.transitionSecs = distToTransitionEndPx * speed;
         scsvrStapleyBouncePosition.secsBeforeBounce = distToBounceTargetPx * speed;
@@ -1003,6 +1017,18 @@ function calcNextBouncePosition() {
         };
     };
     // If deltaX === deltaY, this is a corner bounce, and both if-blocks above will run.
+
+    //////.//////console.log('scsvrStapleyBouncePosition.secsBeforeBounce:', scsvrStapleyBouncePosition.secsBeforeBounce);
+    
+
+    // scsvrStapleyBouncePosition.endTransitionY += window.scrollY;
+    // scsvrStapleyBouncePosition.endTransitionX += window.scrollX;
+
+
+    console.log('scsvrStapleyBouncePosition: ')
+    console.log(JSON.stringify(scsvrStapleyBouncePosition))
+    // console.log('scsvrStapleyBouncePosition.endTransitionY')
+    // console.log(scsvrStapleyBouncePosition.endTransitionY)
 
     // Change direction of motion.
     if (typeof newAfterBounceDirX !== 'undefined') scsvrStapleyBouncePosition.afterBounceDirX = newAfterBounceDirX;
@@ -1037,9 +1063,21 @@ function scsvrStapleyMoveToNewBounce(firstBounce=true, debugFinalLoopXXXXXX=fals
     calcNextBouncePosition();
     // console.log('calcNextBouncePosition(), scsvrStapleyBouncePosition:')
     // console.log(scsvrStapleyBouncePosition)
-    scsvrStapleyBoxElem.style.transition = `all ${scsvrStapleyBouncePosition.transitionSecs}s linear`;
-    scsvrStapleyBoxElem.style.top = `${scsvrStapleyBouncePosition.endTransitionY}px`;
+    // console.log(`scsvrStapleyBoxElem.style.transition = all ${scsvrStapleyBouncePosition.transitionSecs.toFixed(2)}s linear`);
+    scsvrStapleyBoxElem.style.transition = `all ${scsvrStapleyBouncePosition.transitionSecs.toFixed(2)}s linear`;
+    scsvrStapleyBoxElem.style.top = `${Math.max(scsvrStapleyBouncePosition.endTransitionY, 0)}px`;
+    // scsvrStapleyBoxElem.style.top = `${scsvrStapleyBouncePosition.endTransitionY}px`;
     scsvrStapleyBoxElem.style.left = `${scsvrStapleyBouncePosition.endTransitionX}px`;
+
+    console.log('************* After calcNextBouncePosition()')
+    // console.log('scsvrStapleyBoxElem.style.transition =', scsvrStapleyBoxElem.style.transition)
+    console.log('scsvrStapleyBoxElem.style.top =', scsvrStapleyBoxElem.style.top)
+    // console.log('scsvrStapleyBoxElem.style.left =', scsvrStapleyBoxElem.style.left)
+    setTimeout(() => {
+        console.log('scsvrStapleyBoxElem.style.top =', scsvrStapleyBoxElem.style.top)
+        // console.log('^^^^ scsvrStapleyBoxElem.getBoundingClientRect():')
+        console.log(scsvrStapleyBoxElem.getBoundingClientRect())
+    }, 1);
 
     if (    settings['bounce screensaver']['filter background'] 
             && settings['bounce screensaver']['change filter on bounce'] 
