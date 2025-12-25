@@ -11,8 +11,8 @@ const settings = {
     'wait before peek secs': 0,  // min: 0; production: 12
     'peek secs': 4,  // 16
     'bounce screensaver': {
-        'show paper layer': false,
-        'skew paper layer': false,
+        'show paper layer': true,
+        'skew paper layer': true,
         'filter background': true,
         'change filter on bounce': true,
     },
@@ -71,17 +71,20 @@ const stapleyBodyHtml = `
     </div>
 `;
 const stapleyRootHtml = `
-    <div id="scsvr-containerXXXXXX">
-        <div id="scsvr-stapley-box" style="z-index: 103; opacity: 0; display: none; " onclick="scsvrStop()">
-            <img class="stapley-body" alt="" src="/static/stapley/scsvr/body.png" />
-            <img class="stapley-eyes" alt="" src="/static/stapley/scsvr/eyes.png" />
-        </div>
-        <div id="scsvr-background" style="z-index: 102; opacity: 0; display: none; " onclick="scsvrStop()"></div>
+    <div id="scsvr-background" style="XXXXXXz-index: 102; XXXXXXopacity: 0; XXXXXXdisplay: none; "></div>
+    <div id="scsvr-stapley-box" style="XXXXXXz-index: 103; XXXXXXopacity: 0; XXXXXXdisplay: none; ">
+        <img class="stapley-body" alt="" src="/static/stapley/scsvr/body.png" />
+        <img class="stapley-eyes" alt="" src="/static/stapley/scsvr/eyes.png" />
     </div>
 `;
 const stapleyHtmlElem = document.createElement('div');
+stapleyHtmlElem.style.display = 'none';
 stapleyHtmlElem.id = 'scsvr-container';
 stapleyHtmlElem.innerHTML = stapleyRootHtml;
+stapleyHtmlElem.addEventListener('click', () => {
+    console.log('stapleyHtmlElem.addEventListener(click)');
+    scsvrStop();
+});
 document.documentElement.append(stapleyHtmlElem);
 document.body.innerHTML += stapleyBodyHtml;
 
@@ -248,15 +251,15 @@ scsvrBgElem.style.height = `${window.innerHeight * scsvrBgOversizeRatio}px`;
 scsvrBgElem.style.backgroundSize = `auto ${100 / scsvrBgOversizeRatio}%`;
 scsvrBgElem.style.transform = `${scsvrBgTranslateStr}`;
 
-scsvrStapleyBoxElem.style.display = 'flex';
+// scsvrStapleyBoxElem.style.display = 'flex';
 
 scsvrStop();
 window.addEventListener('resize', windowResizeEventListener);
-//////.////// COMMENTED OUT FOR DEBUG ONLY!
-// window.addEventListener('blur', () => {
-//     stapleyClose(0);
-//     scsvrStop(false);
-// });
+////.////// COMMENT OUT FOR DEBUG ONLY!
+window.addEventListener('blur', () => {
+    stapleyClose(0);
+    scsvrStop(false);
+});
 window.addEventListener('focus', stapleyReset);
 
 //////.////// DEBUG ONLY!!!!!
@@ -807,7 +810,7 @@ function scsvrStop(resetStapleyForPeeking=true, hideScsvrBg=false) {
     scsvrBgElem.style.opacity = 0;
 
     for (const elem of hideDuringScsvrElems) elem.style.opacity = 1;
-    scsvrBgElem.style.display = 'none';
+    // scsvrBgElem.style.display = 'none';
 
     // if (hideScsvrBg) scsvrBgColorElem.style.display = 'none';//////.//////
 
@@ -817,13 +820,17 @@ function scsvrStop(resetStapleyForPeeking=true, hideScsvrBg=false) {
     scsvrStapleyBoxElem.style.left = 0;
     scsvrStapleyBoxElem.style.right = 'auto';
     scsvrStapleyBoxElem.style.bottom = 'auto';
-    scsvrStapleyBoxElem.style.opacity = 0;
+    // scsvrStapleyBoxElem.style.opacity = 0;
 
     scsvrStapleyBodyElem.setAttribute('src', '/static/stapley/scsvr/body.png');
     scsvrStapleyEyesElem.setAttribute('src', '/static/stapley/scsvr/eyes.png');
+
+    document.querySelector('#scsvr-container').style.display = 'none';
 };
 
 function scsvrBounceStart() {
+
+    // console.log('bounce start')
 
     if (scsvrRunningBool) return;
     scsvrRunningBool = true;
@@ -833,13 +840,17 @@ function scsvrBounceStart() {
     clearTimeout(scsvrStapleyRepositionTimeoutId);
 
     stapleyClose(0);
+
+    console.log("stapleyHtmlElem.style.display = 'flex';");
+    document.querySelector('#scsvr-container').style.display = 'flex';
+    // stapleyHtmlElem.style.display = 'flex';
     
     for (const elem of hideDuringScsvrElems) elem.style.opacity = 0;
     if (settings['bounce screensaver']['show paper layer']) scsvrBgElem.style.opacity = 1;  // Html is initialized at opacity=0;
-    scsvrBgElem.style.display = 'flex';
+    // scsvrBgElem.style.display = 'flex';
     // scsvrBgColorElem.style.display = 'flex';//////.//////
 
-    scsvrStapleyBoxElem.style.opacity = 1;
+    // scsvrStapleyBoxElem.style.opacity = 1;
     scsvrStapleyBoxElem.style.transform = 'none';
     scsvrStapleyBouncePosition = {transitionSecs: 1, secsBeforeBounce: 1, endTransitionX: 550, endTransitionY: 0, afterBounceDirX: -1, afterBounceDirY: 1, };
 
@@ -881,8 +892,9 @@ function scsvrAcrossStart() {
     
     for (const elem of hideDuringScsvrElems) elem.style.opacity = 0;
     if (settings['fly screensaver']['show paper layer']) scsvrBgElem.style.opacity = 1;  // Html is initialized at opacity=0;
-    scsvrBgElem.style.display = 'flex';
+    // scsvrBgElem.style.display = 'flex';
     // scsvrBgColorElem.style.display = 'flex';//////.//////
+    document.querySelector('#scsvr-container').style.display = 'flex';
 
     scsvrBgElem.style.transition = `all ${scsvrBgTransitionSecs}s ease-in-out`;
     
