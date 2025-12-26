@@ -255,19 +255,19 @@ scsvrBgElem.style.transform = `${scsvrBgTranslateStr}`;
 
 scsvrStop();
 window.addEventListener('resize', windowResizeEventListener);
-////.////// COMMENT OUT FOR DEBUG ONLY!
-window.addEventListener('blur', () => {
-    stapleyClose(0);
-    scsvrStop(false);
-});
+// ////.////// COMMENT OUT FOR DEBUG ONLY!
+// window.addEventListener('blur', () => {
+//     stapleyClose(0);
+//     scsvrStop(false);
+// });
 window.addEventListener('focus', stapleyReset);
 
-//////.////// DEBUG ONLY!!!!!
-window.addEventListener('keydown', (e) => {
-    if (e.key === '0') scsvrStop();
-    else if (e.key === '1') scsvrBounceStart();
-    else if (e.key === '2') scsvrAcrossStart();
-});
+// //////.////// DEBUG ONLY!!!!!
+// window.addEventListener('keydown', (e) => {
+//     if (e.key === '0') scsvrStop();
+//     else if (e.key === '1') scsvrBounceStart();
+//     else if (e.key === '2') scsvrAcrossStart();
+// });
 
 let windowResizeThrottleReopenTimeoutId, windowResizeScsvrStopTimeoutIdXXXXXX;
 let windowResizeThrottleOpen = true;
