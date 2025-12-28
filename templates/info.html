@@ -49,6 +49,19 @@
             padding: 1px 1px 1px min(40px, 6vw);
             border-left: 2px solid hsl(0, 0%, 30%);
         }
+        button {
+            background-color: transparent;
+            border: 1px solid hsl(0, 0%, 60%);
+            padding: 0.4rem 0.7rem;
+            font-size: 1.2rem;
+            color: hsl(128, 100%, 70%);
+        }
+        button:hover {
+            /* background-color: hsl(128, 100%, 70%); */
+            /* color: white;
+            border-color: hsl(128, 100%, 70%); */
+            border-color: white;
+        }
     </style>
 </head>
 
@@ -215,19 +228,19 @@
             <a href="https://soundcloud.com/beetleboxmusic" target="_blank">SoundCloud</a>
         </div>
 
-    </div>
+        <br><br><br>
+        <button onclick="scsvrBounceStart()" style="cursor: pointer; " 
+            ><span class='XXXXXXblue'>Screensaver1</span
+            ><span class='soft-grey'>.</span
+            ><span class='XXXXXXblue'>exe</span
+        ></button>
+        <button onclick="scsvrAcrossStart()" style="cursor: pointer; "
+            ><span class='XXXXXXblue'>Screensaver2</span
+            ><span class='soft-grey'>.</span
+            ><span class='XXXXXXblue'>exe</span
+        ></button>
 
-    <br><br>
-    <h3 onclick="scsvrBounceStart()" style="cursor: pointer; " 
-        ><span class='blue'>Screensaver1</span
-        ><span class='soft-grey'>.</span
-        ><span class='blue'>exe</span
-    ></h3>
-    <h3 onclick="scsvrAcrossStart()" style="cursor: pointer; "
-        ><span class='blue'>Screensaver2</span
-        ><span class='soft-grey'>.</span
-        ><span class='blue'>exe</span
-    ></h3>
+    </div>
 
     <br><br><br>
     <p class='soft-grey'>&#169; {{ copyright_notice }}</p>

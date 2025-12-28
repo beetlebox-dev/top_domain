@@ -255,11 +255,15 @@ scsvrBgElem.style.transform = `${scsvrBgTranslateStr}`;
 
 scsvrStop();
 window.addEventListener('resize', windowResizeEventListener);
-// ////.////// COMMENT OUT FOR DEBUG ONLY!
-// window.addEventListener('blur', () => {
-//     stapleyClose(0);
-//     scsvrStop(false);
-// });
+////.////// COMMENT OUT FOR DEBUG ONLY!
+window.addEventListener('blur', () => {
+    stapleyClose(0);
+    scsvrStop(false);
+});
+window.addEventListener('focus', () => {
+    stapleyClose(0);
+    scsvrStop(false);
+});
 window.addEventListener('focus', stapleyReset);
 
 // //////.////// DEBUG ONLY!!!!!
