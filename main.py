@@ -80,5 +80,12 @@ def info():
     return render_template('info.html', copyright_notice=copyright_notice)
 
 
+# App Buttons
+@app.route('/remove_stapley')  # URL path should reinforce front-end button decoy text.
+def rick_roll():
+    redirect_url = 'https://youtu.be/Aq5WXmQQooo?si=nmcqGHwK4OKRHXPy'
+    return redirect(redirect_url)
+
+
 if __name__ == '__main__':
     app.run(debug=debug_mode)

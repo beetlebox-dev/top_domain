@@ -7,9 +7,12 @@
 // <script src="/static/stapley/stapley.js"></script>
 
 
+// Use class "stapley-scsvr-hide" on elements that should be hidden while a screensaver is running.
+
+
 const settings = {
-    'wait before peek secs': 0,  // min: 0; production: 12
-    'peek secs': 4,  // 16
+    'wait before peek secs': 0,  // min: 0; production: 10
+    'peek secs': 6,
     'bounce screensaver': {
         'show paper layer': true,
         'skew paper layer': true,
@@ -22,17 +25,6 @@ const settings = {
         'filter background': true,
     },
 };
-// const waitBeforeNextPeekSecs = 0;  // min: 0; production: 12
-// const peekHoldSecs = 8;  // 16
-
-// const scsvrBouncePaperLayerBool = true;
-// const scsvrBounceBgSkewBool = true;
-// const scsvrBounceBgFilterBool = true;
-// const scsvrChangeFilterOnBounce = true;
-
-// const scsvrAcrossPaperLayerBool = true;
-// const scsvrAcrossBgSkewBool = true;
-// const scsvrAcrossBgFilterBool = true;
 
 
 // Add CSS.
@@ -263,8 +255,9 @@ window.addEventListener('blur', () => {
 window.addEventListener('focus', () => {
     stapleyClose(0);
     scsvrStop(false);
+    stapleyReset();
 });
-window.addEventListener('focus', stapleyReset);
+// window.addEventListener('focus', stapleyReset);
 
 // //////.////// DEBUG ONLY!!!!!
 // window.addEventListener('keydown', (e) => {
@@ -530,7 +523,7 @@ function stapleyOnClick() {
     stapleyBoxElem.style.transition = `all ${moveToAndFromCenterSecs}s ease-in-out`;
     stapleyPositionObj.position = 'center';
     repositionStapleyTimeout();
-    const stapleyTopMessageLines = [`Hi, I’m Stapley! `, `It looks like you’re interested in this profile. `, `Would you like help? `, ];
+    const stapleyTopMessageLines = [`Hi, I’m Stapley! `, `It looks like you’re interested in this portfolio. `, `Would you like help? `, ];
     stapleyMessage(stapleyTopMessageLines, moveToAndFromCenterSecs);
 };
 
@@ -551,11 +544,11 @@ function stapleyJoke() {
 };
 
 function stapleyContact() {
-    const emailAddress = 'elenne09@gmail.com';
-    const messageLines = [`Ok, here's some contact info you may find useful:`, '', 'El Lenn', 'Seattle, Washington', ];
+    const emailAddress = 'john.penningt1@gmail.com';
+    const messageLines = [`Ok, here's some contact info you may find useful:`, '', 'John Pennington', 'Seattle, Washington', ];
     const finalMessageLines = messageLines.slice();
     messageLines.push(emailAddress);
-    finalMessageLines.push(`<a href="mailto:${emailAddress}">${emailAddress}</a>`);
+    finalMessageLines.push(`<a class="stapley-email-link" href="mailto:${emailAddress}">${emailAddress}</a>`);
     stapleyMessage(messageLines, moveToAndFromCenterSecs, finalMessageLines);
 };
 

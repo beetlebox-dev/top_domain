@@ -37,7 +37,7 @@
         em {
             color: hsl(12, 100%, 70%);
         }
-        a {
+        a:not(.stapley-email-link) {
             color: hsl(128, 100%, 70%);
             transition-duration: 150ms;
         }
@@ -229,12 +229,12 @@
         </div>
 
         <br><br><br>
-        <button onclick="scsvrBounceStart()" style="cursor: pointer; " 
+        <button class="stapley-scsvr-hide" onclick="scsvrBounceStart()" style="cursor: pointer; " 
             ><span class='XXXXXXblue'>Screensaver1</span
             ><span class='soft-grey'>.</span
             ><span class='XXXXXXblue'>exe</span
         ></button>
-        <button onclick="scsvrAcrossStart()" style="cursor: pointer; "
+        <button class="stapley-scsvr-hide" onclick="scsvrAcrossStart()" style="cursor: pointer; "
             ><span class='XXXXXXblue'>Screensaver2</span
             ><span class='soft-grey'>.</span
             ><span class='XXXXXXblue'>exe</span

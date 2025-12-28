@@ -101,7 +101,7 @@
     top: 0;
     left: 0;
     /* background-color: white; */
-    background-color: hsla(208, 100%, 50%, 35%);  /* "skyglass" */
+    background-color: hsla(208, 0%, 0%, 40%);
 }
 
 .stapley-menu-box, #stapley-message {
