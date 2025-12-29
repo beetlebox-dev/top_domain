@@ -18,7 +18,7 @@ const settings = {
             `Would you like help? `, 
         ],
         'primary': {
-            'button text': 'Contact the developer',
+            'button text': 'Help me contact the developer.',
             'message lines': [
                 `Ok, here's some contact info you may find useful:`, 
                 '', 
@@ -33,7 +33,7 @@ const settings = {
             'url': '/remove_stapley',
         },
     },
-    'wait before peek secs': 0,  // min: 0; production: 10
+    'wait before peek secs': 10,  // min: 0; production: 10
     'peek secs': 6,
     'bounce screensaver': {
         'show paper layer': true,
@@ -47,14 +47,15 @@ const settings = {
         'filter background': true,
     },
 };
+////// Initial settings
 // const settings = {
 //     'dialog': {
 //         'opening lines': [
 //             `Hi, I’m <em>Stapley</em>! `, 
-//             `What do you want to do? `, 
+//             `How can I help? `, 
 //         ],
 //         'primary': {
-//             'button text': `Do you have contact info?`,
+//             'button text': `Can you help me get in touch?`,
 //             'message lines': [
 //                 `Ok, here's some contact info:`, 
 //                 '', 
@@ -69,7 +70,7 @@ const settings = {
 //             'url': 'https://en.wikipedia.org/wiki/42_(number)',
 //         },
 //     },
-//     'wait before peek secs': 0,  // min: 0; production: 10
+//     'wait before peek secs': 4,  // min: 0; production: 10
 //     'peek secs': 6,
 //     'bounce screensaver': {
 //         'show paper layer': true,
