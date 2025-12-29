@@ -11,6 +11,28 @@
 
 
 const settings = {
+    'dialog': {
+        'opening lines': [
+            `Hi, I’m Stapley! `, 
+            `It looks like you’re interested in this portfolio. `, 
+            `Would you like help? `, 
+        ],
+        'primary': {
+            'button text': 'Contact the developer',
+            'message lines': [
+                `Ok, here's some contact info you may find useful:`, 
+                '', 
+                'John Pennington', 
+                'Seattle, Washington', 
+                '<a class="stapley-email-link" href="mailto:john.penningt1@gmail.com">john.penningt1@gmail.com</a>', 
+            ],
+        },
+        'jokes url': '/static/stapley/jokes.csv',
+        'link': {
+            'button text': `Go away, Stapley!`,
+            'url': '/remove_stapley',
+        },
+    },
     'wait before peek secs': 0,  // min: 0; production: 10
     'peek secs': 6,
     'bounce screensaver': {
@@ -25,6 +47,44 @@ const settings = {
         'filter background': true,
     },
 };
+// const settings = {
+//     'dialog': {
+//         'opening lines': [
+//             `Hi, I’m <em>Stapley</em>! `, 
+//             `What do you want to do? `, 
+//         ],
+//         'primary': {
+//             'button text': `Do you have contact info?`,
+//             'message lines': [
+//                 `Ok, here's some contact info:`, 
+//                 '', 
+//                 'John Doe', 
+//                 'Seattle, Washington', 
+//                 '<a class="stapley-email-link" href="mailto:example@email.com">example@email.com</a>', 
+//             ],
+//         },
+//         'jokes url': '/static/stapley/jokes.csv',
+//         'link': {
+//             'button text': `What's the meaning of life?`,
+//             'url': 'https://en.wikipedia.org/wiki/42_(number)',
+//         },
+//     },
+//     'wait before peek secs': 0,  // min: 0; production: 10
+//     'peek secs': 6,
+//     'bounce screensaver': {
+//         'show paper layer': true,
+//         'skew paper layer': true,
+//         'filter background': true,
+//         'change filter on bounce': true,
+//     },
+//     'fly screensaver': {
+//         'show paper layer': true,
+//         'skew paper layer': true,
+//         'filter background': true,
+//     },
+// };
+// The 'opening lines' and 'message lines' key values are arrays of strings.
+    // HTML tags are allowed in individual lines, but must be opened and closed on the same line.
 
 
 // Add CSS.
@@ -46,10 +106,10 @@ const stapleyBodyHtml = `
         <div id="stapley-message" style="opacity: 0; " onclick="stapleyOnClick();">&nbsp;</div><!-- &nbsp there to init height for one line of text. -->
         <br />
         <div id="stapley-top-user-reply-box" class="stapley-user-reply-box" style="opacity: 0; XXXXXXdisplay: none; ">
-            <button class="stapley-top-user-reply-button" onclick="stapleyContact()"><div class="stapley-button-box">Contact this person for a job opportunity</div></button>
-            <button class="stapley-top-user-reply-button" onclick="stapleyJoke()"><div class="stapley-button-box">Tell me a joke</div></button>
-            <a class="stapley-top-user-reply-button XXXXXXanchor-button-wrapper" href="/remove_stapley" target="_blank" XXXXXXonclick="stapleyRickRollButtonOnClick()" XXXXXXonclick="onClickThisDisplayNone(this)">
-                <div class="stapley-button-box">Go away, Stapley</div>
+            <button class="stapley-top-user-reply-button" onclick="stapleyContact()"><div class="stapley-button-box">${settings.dialog.primary['button text']}</div></button>
+            <button class="stapley-top-user-reply-button" onclick="stapleyJoke()"><div class="stapley-button-box">Tell me a joke.</div></button>
+            <a class="stapley-top-user-reply-button XXXXXXanchor-button-wrapper" href="${settings.dialog.link.url}" target="_blank" XXXXXXonclick="stapleyRickRollButtonOnClick()" XXXXXXonclick="onClickThisDisplayNone(this)">
+                <div class="stapley-button-box">${settings.dialog.link['button text']}</div>
             </a>
         </div>
         <div class="stapley-menu-box" style="display: none; ">
@@ -112,7 +172,7 @@ document.body.innerHTML += stapleyBodyHtml;
 //     return csvArray2d;
 // };
 
-let jokes2dArray = [['When the fish ran into the wall, it said: ', '"Dam!"'], ];  // Init value in case data is needed before jokes.csv is fetched/parsed.
+let jokes2dArray = [['When the fish ran into the wall, it said: ', '"Dam!"'], ];  // Init value in case data is needed before joke data is fetched/parsed.
 
 // // Requires XLSX package. Include in HTML head: <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 // try { XLSX; } catch { handleErrorLoadingXlsxPackage(); };
@@ -269,6 +329,11 @@ window.addEventListener('focus', () => {
 let windowResizeThrottleReopenTimeoutId, windowResizeScsvrStopTimeoutIdXXXXXX;
 let windowResizeThrottleOpen = true;
 
+function removeHtmlTags(htmlString) {
+    const tempHtmlElem = document.createElement('div');
+    tempHtmlElem.innerHTML = htmlString;
+    return tempHtmlElem.textContent || tempHtmlElem.innerText || '';
+};
 
 function stapleyReset() {
     if (stapleyOn) {
@@ -494,17 +559,24 @@ function renderStapleyMessageFrame(messageLines=null, messageStr=null, firstChar
     stapleyMessageElem.innerHTML = elemInnerHtml;
 };
 
-function stapleyMessage(messageStrLines, initDelaySecs, finalMessageStrLines=null) {
+function stapleyMessage(messageStrLines, initDelaySecs) {
 
     clearTimeout(stapleyTimeoutId);
     clearTimeout(stapleyMessageTimeoutId);
-    renderStapleyMessageFrame(messageStrLines, null, 0);
+
+    const messageStrLinesTextOnly = [];
+    for (const line of messageStrLines) {
+        const textOnlyLine = removeHtmlTags(line);
+        messageStrLinesTextOnly.push(textOnlyLine);
+    };
+
+    renderStapleyMessageFrame(messageStrLinesTextOnly, null, 0);
     refreshStapleyMeasurements();
 
     stapleyTimeoutId = setTimeout(() => {
         stapleyMenuBoxElem.style.display = 'flex';
         stapleyMessageElem.style.opacity = 1;
-        stapleyTypingAnimationTimeout(messageStrLines, 1, finalMessageStrLines);
+        stapleyTypingAnimationTimeout(messageStrLinesTextOnly, 1, messageStrLines);
     }, initDelaySecs * 1000);
 };
 
@@ -523,8 +595,7 @@ function stapleyOnClick() {
     stapleyBoxElem.style.transition = `all ${moveToAndFromCenterSecs}s ease-in-out`;
     stapleyPositionObj.position = 'center';
     repositionStapleyTimeout();
-    const stapleyTopMessageLines = [`Hi, I’m Stapley! `, `It looks like you’re interested in this portfolio. `, `Would you like help? `, ];
-    stapleyMessage(stapleyTopMessageLines, moveToAndFromCenterSecs);
+    stapleyMessage(settings.dialog['opening lines'], moveToAndFromCenterSecs);
 };
 
 function getRandomStapleyJokeLines() {
@@ -544,12 +615,7 @@ function stapleyJoke() {
 };
 
 function stapleyContact() {
-    const emailAddress = 'john.penningt1@gmail.com';
-    const messageLines = [`Ok, here's some contact info you may find useful:`, '', 'John Pennington', 'Seattle, Washington', ];
-    const finalMessageLines = messageLines.slice();
-    messageLines.push(emailAddress);
-    finalMessageLines.push(`<a class="stapley-email-link" href="mailto:${emailAddress}">${emailAddress}</a>`);
-    stapleyMessage(messageLines, moveToAndFromCenterSecs, finalMessageLines);
+    stapleyMessage(settings.dialog.primary['message lines'], moveToAndFromCenterSecs);
 };
 
 function stapleyPeek() {
@@ -1154,7 +1220,7 @@ function scsvrStapleyReposition(edgeStr, rotationTurns, invert=false, enableScal
 function loadJokes() {
     // console.log('loadJokes()');
     try { 
-        fetch('/static/stapley/jokes.csv')
+        fetch(settings.dialog['jokes url'])
         .then((response) => response.text())
         .then((responseStr) => jokes2dArray = csvResponseStrTo2dArray(responseStr));
     } catch (error) { 

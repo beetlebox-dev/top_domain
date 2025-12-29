@@ -49,12 +49,21 @@
             padding: 1px 1px 1px min(40px, 6vw);
             border-left: 2px solid hsl(0, 0%, 30%);
         }
+        .scsvr-button-box {
+            display: flex;
+            flex-wrap: wrap;
+            width: min-content;
+            flex-direction: column;
+        }
         button {
+            /* flex: 1; */
             background-color: transparent;
             border: 1px solid hsl(0, 0%, 60%);
             padding: 0.4rem 0.7rem;
             font-size: 1.2rem;
             color: hsl(128, 100%, 70%);
+            /* width: 100%; */
+            margin-top: 0.5rem;
         }
         button:hover {
             /* background-color: hsl(128, 100%, 70%); */
@@ -229,17 +238,18 @@
         </div>
 
         <br><br><br>
-        <button class="stapley-scsvr-hide" onclick="scsvrBounceStart()" style="cursor: pointer; " 
-            ><span class='XXXXXXblue'>Screensaver1</span
-            ><span class='soft-grey'>.</span
-            ><span class='XXXXXXblue'>exe</span
-        ></button>
-        <button class="stapley-scsvr-hide" onclick="scsvrAcrossStart()" style="cursor: pointer; "
-            ><span class='XXXXXXblue'>Screensaver2</span
-            ><span class='soft-grey'>.</span
-            ><span class='XXXXXXblue'>exe</span
-        ></button>
-
+        <div class="scsvr-button-box">
+            <button class="stapley-scsvr-hide" onclick="scsvrBounceStart()" style="cursor: pointer; " 
+                ><span class='XXXXXXblue'>Screensaver1</span
+                ><span class='soft-grey'>.</span
+                ><span class='XXXXXXblue'>exe</span
+            ></button>
+            <button class="stapley-scsvr-hide" onclick="scsvrAcrossStart()" style="cursor: pointer; "
+                ><span class='XXXXXXblue'>Screensaver2</span
+                ><span class='soft-grey'>.</span
+                ><span class='XXXXXXblue'>exe</span
+            ></button>
+        </div>
     </div>
 
     <br><br><br>
